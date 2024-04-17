@@ -1,3 +1,5 @@
+package leetcode;
+
 import java.util.Arrays;
 
 public class leetcode673_dp {

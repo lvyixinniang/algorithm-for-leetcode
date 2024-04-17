@@ -1,3 +1,5 @@
+package leetcode;
+
 public class leetcode516_dp {
     public int longestPalindromeSubseq(String s) {
         int n  = s.length();
