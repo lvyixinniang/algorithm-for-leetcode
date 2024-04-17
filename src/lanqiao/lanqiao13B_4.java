@@ -1,3 +1,5 @@
+package lanqiao;
+
 import java.io.*;
 
 public class lanqiao13B_4 {

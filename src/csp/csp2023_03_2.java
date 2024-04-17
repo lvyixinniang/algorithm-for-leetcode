@@ -1,3 +1,4 @@
+package csp;
 
 import java.util.Scanner;
 

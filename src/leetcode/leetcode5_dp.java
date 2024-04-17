@@ -1,3 +1,5 @@
+package leetcode;
+
 public class leetcode5_dp {
     public String longestPalindrome(String s) {
         int len = s.length();

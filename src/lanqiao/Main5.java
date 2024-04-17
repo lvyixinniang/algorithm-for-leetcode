@@ -1,3 +1,5 @@
+package lanqiao;
+
 import java.util.Scanner;
 
 public class Main5 {
