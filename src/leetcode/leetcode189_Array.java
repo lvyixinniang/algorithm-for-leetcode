@@ -1,6 +1,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class leetcode189_Array {
@@ -35,6 +36,8 @@ public class leetcode189_Array {
            arr[(i+k)%n] = nums[i];
        }
        System.arraycopy(arr,0,nums,0,n);
+
+
    }
 
 }
