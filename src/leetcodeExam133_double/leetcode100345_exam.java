@@ -1,4 +1,4 @@
-package exam;
+package leetcodeExam133_double;
 
 public class leetcode100345_exam {
     public static void main(String[] args) {
