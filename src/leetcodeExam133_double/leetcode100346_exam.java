@@ -1,4 +1,4 @@
-package exam;
+package leetcodeExam133_double;
 
 // 最后30分钟 ， 才进竞赛 ， 最后5分钟 ， 做的这道题  ，此题没做完
 
