@@ -31,6 +31,6 @@ public class leetcode42 {
             }
             stack.push(i);
         }
-        return  sum;
+        return sum;
     }
 }
