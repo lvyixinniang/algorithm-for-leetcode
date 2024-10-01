@@ -22,6 +22,7 @@ public class leetcode19 {
         }
 
         ListNode pre = head;
+        if (len == n) return head.next;
 //        int sum = len;
         while (len - 1 != n && pre != null) {
             pre = pre.next;
