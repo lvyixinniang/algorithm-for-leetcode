@@ -1,5 +1,8 @@
 package leetcode.Binary_Tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class leetcode104 {
    public static class TreeNode {
       int val;
@@ -15,8 +18,29 @@ public class leetcode104 {
   }
    public static int maxDepth(TreeNode root) {
 //       DFS
+/*       if (root == null) return 0;
+       return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;*/
+
+//       BFS
        if (root == null) return 0;
-       return Math.max(maxDepth(root.left),maxDepth(root.right)) + 1;
+       Queue<TreeNode> queue = new LinkedList<>();
+       queue.offer(root);
+       int ans = 0;
+       while (!queue.isEmpty()) {
+           int size = queue.size();
+            while (size > 0) {
+                TreeNode node = queue.poll();
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+                size --;
+            }
+            ans ++;
+       }
+       return ans;
    }
 
    public static void main(String[] args) {
