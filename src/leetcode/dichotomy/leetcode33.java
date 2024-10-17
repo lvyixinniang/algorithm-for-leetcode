@@ -14,6 +14,7 @@ public class leetcode33 {
                 k = i;
             }
         }
+//        这里的排序的话， 时间复杂度 ， 就超过了O(logn)
         Arrays.sort(nums);
         int l = 0, r = length - 1;
         while (l <= r) {
