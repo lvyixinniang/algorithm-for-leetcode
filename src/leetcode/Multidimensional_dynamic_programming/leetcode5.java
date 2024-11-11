@@ -6,25 +6,40 @@ import java.util.List;
 import java.util.Map;
 
 public class leetcode5 {
-
-    public String longestPalindrome(String s) {
+    public static void main(String[] args) {
+        System.out.println(longestPalindrome("babad"));
+    }
+    public static String longestPalindrome(String s) {
         int len = s.length();
-        String res = "";
-        Map<Character, List<Integer>> map = new HashMap<>();
+        if (len == 1) return s;
+
+        boolean[][] dp = new boolean[len][len];
         for (int i = 0; i < len; i++) {
-            char c = s.charAt(i);
-            List<Integer> integers = map.getOrDefault(c, new ArrayList<>());
-            integers.add(i);
-            map.put(c, integers);
+            dp[i][i] = true;
         }
 
-        for (List<Integer> integers : map.values()) {
-            if (integers.size() >= 2) {
-                
+        int startIndex = 0;
+        int maxLen = 1;
+        char[] charArray = s.toCharArray();
+
+        for (int L = 2; L <= len; L++) {
+            for (int i = 0; i < len; i++) {
+                int j = i + L - 1;
+                if (j >= len) break;
+
+                if (charArray[i] != charArray[j]) {
+                    dp[i][j] = false;
+                }else {
+                    if (L == 2) dp[i][j] = true;
+                    else dp[i][j] = dp[i + 1][j - 1];
+                }
+                if (L > maxLen && dp[i][j]) {
+                    maxLen = L;
+                    startIndex = i;
+                }
             }
         }
 
-
-        return res;
+        return s.substring(startIndex, startIndex + maxLen );
     }
 }
