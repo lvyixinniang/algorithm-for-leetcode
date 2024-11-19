@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.dynamic_planning;
 
 public class leetcode5_dp {
     public String longestPalindrome(String s) {

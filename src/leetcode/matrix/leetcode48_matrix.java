@@ -1,4 +1,4 @@
-package leetcode;
+package leetcode.matrix;
 
 public class leetcode48_matrix {
     public static void main(String[] args) {
