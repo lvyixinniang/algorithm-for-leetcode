@@ -19,29 +19,28 @@ public class BFS {
             this.right = right;
         }
     }
-    public List<Integer> BFS (TreeNode root) {
-        if (root == null) {
-            return null;
-        }
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> lists = new ArrayList<>();
+        if (root == null) return lists;
         Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        // 存放遍历结果， 然后返回
-        List<Integer> result = new ArrayList<>();
+        queue.offer(root);
         while (!queue.isEmpty()) {
-            TreeNode treeNode = queue.poll();
+            int size = queue.size();
+            List<Integer> list = new ArrayList<>();
+            while (size > 0) {
+                TreeNode poll = queue.poll();
+                list.add(poll.val);
 
-            /*
-                处理 TreeNode 节点 的逻辑
-             */
-            result.add(treeNode.val);
-
-            if (treeNode.left != null) {
-                queue.add(treeNode.left);
+                if (poll.left != null) {
+                    queue.offer(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.offer(poll.right);
+                }
+                size --;
             }
-            if (treeNode.right != null) {
-                queue.add(treeNode.right);
-            }
+            lists.add(list);
         }
-        return result;
+        return lists;
     }
 }
