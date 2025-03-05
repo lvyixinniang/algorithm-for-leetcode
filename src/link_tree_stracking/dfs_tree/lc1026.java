@@ -15,22 +15,24 @@ public class lc1026 {
           this.right = right;
       }
   }
-  static int maxx = 0;
-  static int minn = Integer.MAX_VALUE;
+  static int maxLen = 0;
     public static int maxAncestorDiff(TreeNode root) {
         if (root == null) return 0;
         // dfs
-        dfsSearch(root);
-        return maxx - minn;
+            // 临时变量
+        int currMax = 0;
+        int currMin = Integer.MAX_VALUE;
+        dfsSearch(root, currMax, currMin);
+        return maxLen;
     }
 
-    private static void dfsSearch(TreeNode root) {
+    private static void dfsSearch(TreeNode root, int currMax, int currMin) {
         if (root == null) return;
-        int val = root.val;
-        if (val < minn) minn = val;
-        if (val > maxx) maxx = val;
-        if (root.left != null) dfsSearch(root.left);
-        if (root.right != null) dfsSearch(root.right);
+        if (root.val > currMax) currMax = root.val;
+        if (root.val < currMin) currMin = root.val;
+        if (currMax - currMin > maxLen) maxLen = currMax - currMin;
+        dfsSearch(root.left, currMax, currMin);
+        dfsSearch(root.right, currMax, currMin);
     }
 
     public static void main(String[] args) {
