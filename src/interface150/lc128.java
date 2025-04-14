@@ -8,12 +8,23 @@ import java.util.Set;
 public class lc128 {
 
     public int longestConsecutive(int[] nums) {
-        Map<Integer, Integer> map = new HashMap<>();
+        Set<Integer> set = new HashSet<>();
         for (int num : nums) {
-            map.put(num,  1);
+            set.add(num);
         }
-        
-        return -1;
+        int max = 0;
+        for (int val : set) {
+            if (!set.contains(val - 1)) {
+                int currentNum = val;
+                int curCount = 1;
+                while (set.contains(currentNum + 1)) {
+                    curCount++;
+                    currentNum++;
+                }
+                max = Math.max(max, curCount);
+            }
+        }
+        return max;
     }
 
     public static void main(String[] args) {
