@@ -5,23 +5,21 @@ import java.util.Map;
 
 public class lc128 {
     public int longestConsecutive(int[] nums) {
-//        todo 需要优化起点
+//        todo 需要优化起点 2025/7/19二做
         Map<Integer, Integer> map = new HashMap<>();
-        for (int num : nums) {
-            map.put(num, 1);
+        for (int i = 0; i < nums.length; i++) {
+            map.put(nums[i], 1);
         }
-        int max = nums.length == 0 ? 0 : 1;
+        int max = 0;
         for (Integer num : map.keySet()) {
-            int temp = num;
-            if (!map.containsKey(temp - 1)) {
-                while (map.containsKey(temp + 1)) {
-                    map.put(temp + 1, map.get(temp) + 1);
-                    max = Math.max(max, map.get(temp + 1));
-                    temp ++;
-                }
+            if (map.containsKey(num - 1)) continue;
+            int tmp = num;
+            while (map.containsKey(tmp + 1)) {
+                map.put(tmp + 1, map.get(tmp) + 1);
+                tmp++;
             }
+            max = Math.max(max, map.get(tmp));
         }
-
         return max;
     }
 

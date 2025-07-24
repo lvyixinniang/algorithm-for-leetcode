@@ -3,20 +3,20 @@ package interface150II;
 public class lc209 {
 
     public int minSubArrayLen(int target, int[] nums) {
-//        todo 对于滑动窗口还是有些不熟
-        int n = nums.length;
-        int minSize = Integer.MAX_VALUE;
-        int left = 0;
+//        todo 对于滑动窗口还是有些不熟 2025/7/19（重做不会）
+        int len = nums.length;
         int sum = 0;
-        for (int right = 0; right < n; right++) {
+        int min = Integer.MAX_VALUE;
+        int left = 0;
+
+        for (int right = 0; right < len; right++) {
             sum += nums[right];
             while (sum >= target) {
-                minSize = Math.min(minSize, right - left + 1);
+                min = Math.min(min, right - left + 1);
                 sum -= nums[left++];
             }
         }
-
-        return minSize == Integer.MAX_VALUE ? 0 : minSize;
+        return min == Integer.MAX_VALUE ? 0 : min;
     }
     public static void main(String[] args) {
         lc209 lc209 = new lc209();

@@ -7,31 +7,26 @@ import java.util.List;
 public class lc56 {
 
     public int[][] merge(int[][] intervals) {
-//        todo 有小问题，没解决出来
-        if (intervals == null || intervals.length == 0) {
-            return new int[0][2];
-        }
-
-        // 按左端点排序
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
-        List<int[]> result = new ArrayList<>();
-        int start = intervals[0][0];
-        int end = intervals[0][1];
-
-        for (int i = 0; i < intervals.length; i++) {
-            int[] cur = intervals[i];
-            if (cur[0] <= end) {
-                end = Math.max(cur[1], end);
+//        todo 有小问题，没解决出来   2025/7/21
+        // 先让区间升序 排列
+        Arrays.sort(intervals, (o1,o2) -> Integer.compare(o1[0],o2[0]));
+        // 需要动态变化
+        List<int[]> list = new ArrayList<>();
+        int length = intervals.length;
+        for (int i = 1; i < length; i++) {
+            if (intervals[i][0] <= intervals[i - 1][1]) {
+                // 有区间重合
+                // 动态变化
+                intervals[i][0] = intervals[i - 1][0];
+                intervals[i][1] = Math.max(intervals[i - 1][1], intervals[i][1]);
             } else {
-                result.add(new int[]{start, end});
-                start = cur[0];
-                end = cur[1];
+                list.add(intervals[i - 1]);
             }
-        }
-        result.add(new int[]{start, end});
 
-        return result.toArray(new int[result.size()][]);
+        }
+        list.add(intervals[length - 1]);
+
+        return list.toArray(new int[list.size()][]);
     }
 
     public static void main(String[] args) {

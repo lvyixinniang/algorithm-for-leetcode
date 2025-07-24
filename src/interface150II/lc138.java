@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class lc138 {
-//    todo 想不到解决办法
+//    todo 想不到解决办法 2025/7/19(重做不会）
     class Node {
         int val;
         Node next;
@@ -17,17 +17,17 @@ public class lc138 {
         }
     }
 
-    Map<Node, Node> cacheNode = new HashMap<Node, Node>();
+    Map<Node, Node> map = new HashMap<>();
 
     public Node copyRandomList(Node head) {
         if (head == null) return null;
 
-        if (!cacheNode.containsKey(head)) {
-            Node headNew = new Node(head.val);
-            cacheNode.put(head, headNew);
-            headNew.next = copyRandomList(head.next);
-            headNew.random = copyRandomList(head.random);
+        if (!map.containsKey(head)) {
+            Node newHead = new Node(head.val);
+            map.put(head, newHead);
+            newHead.next = copyRandomList(head.next);
+            newHead.random = copyRandomList(head.random);
         }
-        return cacheNode.get(head);
+        return map.get(head);
     }
 }
