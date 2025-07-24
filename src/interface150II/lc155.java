@@ -2,29 +2,29 @@ package interface150II;
 
 import java.util.*;
 
-//    todo 根本没想到什么常数级 查询最小元素
+//    todo 根本没想到什么常数级 查询最小元素 2025/7/19(重做）
 class  MinStack {
-    Deque<Integer> xStack;
-    Deque<Integer> minStack;
+    Stack<Integer> stack ;
+    Stack<Integer> minStack; // 当前最小
 
     public MinStack() {
-        xStack = new LinkedList<Integer>();
-        minStack = new LinkedList<Integer>();
-        minStack.push(Integer.MAX_VALUE);
+        stack = new Stack<>();
+        minStack = new Stack<>();
     }
 
     public void push(int val) {
-        xStack.push(val);
-        minStack.push(Math.min(val, minStack.peek()));
+        stack.push(val);
+        if (!minStack.isEmpty()) minStack.push(Math.min(val, minStack.peek()));
+        else minStack.push(val);
     }
 
     public void pop() {
-        xStack.pop();
+        stack.pop();
         minStack.pop();
     }
 
     public int top() {
-        return xStack.peek();
+        return stack.peek();
     }
 
     public int getMin() {
