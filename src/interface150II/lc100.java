@@ -14,18 +14,18 @@ public class lc100 {
           this.right = right;
       }
   }
-// todo 递归不会写
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        return isSame(p,q);
+        return searchEquals(p, q);
     }
 
-    private boolean isSame(TreeNode p, TreeNode q) {
-        if (p == null && q == null ) return true;
-        if (p == null || q == null) return false;
+    private boolean searchEquals(TreeNode p, TreeNode q) {
+          // 先是终止条件
+        if (p == null && q == null) return true;
+        else if (p == null || q == null) return false;
         if (p.val != q.val) return false;
 
-        return isSame(p.left, q.left) && isSame(p.right, q.right);
-    }
+        return searchEquals(p.left, q.left) && searchEquals(p.right, q.right);
+   }
 
 
 }

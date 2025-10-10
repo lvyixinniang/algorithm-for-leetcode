@@ -1,24 +1,28 @@
 package interface150II;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class lc128 {
     public int longestConsecutive(int[] nums) {
-//        todo 需要优化起点 2025/7/19二做
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            map.put(nums[i], 1);
+        Set<Integer> set = new HashSet<>();
+        for (int num : nums) {
+            set.add(num);
         }
         int max = 0;
-        for (Integer num : map.keySet()) {
-            if (map.containsKey(num - 1)) continue;
-            int tmp = num;
-            while (map.containsKey(tmp + 1)) {
-                map.put(tmp + 1, map.get(tmp) + 1);
-                tmp++;
+        for (Integer s : set) {
+            if (set.contains(s - 1)) {
+                continue;
             }
-            max = Math.max(max, map.get(tmp));
+            int sum = 1;
+            int temp = s;
+            while (set.contains(temp + 1)) {
+                sum ++;
+                temp ++;
+            }
+            max = Math.max(max, sum);
         }
         return max;
     }

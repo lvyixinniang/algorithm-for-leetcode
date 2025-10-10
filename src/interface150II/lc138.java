@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class lc138 {
-//    todo 想不到解决办法 2025/7/19(重做不会）
     class Node {
         int val;
         Node next;
@@ -18,16 +17,17 @@ public class lc138 {
     }
 
     Map<Node, Node> map = new HashMap<>();
-
     public Node copyRandomList(Node head) {
-        if (head == null) return null;
-
-        if (!map.containsKey(head)) {
+        if (map.containsKey(head)) {
+            return map.get(head);
+        } else if (head == null) {
+            return null;
+        }
             Node newHead = new Node(head.val);
             map.put(head, newHead);
             newHead.next = copyRandomList(head.next);
             newHead.random = copyRandomList(head.random);
-        }
+
         return map.get(head);
     }
 }
