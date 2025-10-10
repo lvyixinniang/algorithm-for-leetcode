@@ -1,0 +1,61 @@
+本对话都是关于4399的笔试题目的：首先，题目是“卡牌消消乐”游戏：
+桌面上有一排卡牌（boardCards），一共有26种卡牌类型。你手中持有若干张卡牌（handCards）。
+卡牌消除规则：
+1. 选择卡牌：每次可以从手中选1张卡牌，插入桌面卡牌序列的任意位置（包括两端或两张卡牌之间）。
+2. 触发消除：若插入后出现3张及以上相同类型的连续卡牌，则消除这些卡牌。
+3. 连锁消除：若消除后导致新连续同类型卡牌满足消除条件，则继续消除，直至无法消除。
+4. 胜利条件：桌面卡牌全部消除则获胜；若手中卡牌用完仍未清空桌面，则失败。
+
+输出结果：重复多个回合后，若能清空桌面卡牌，则输出最少使用卡牌数；若无法清空，返回 `-1`。
+
+示例1：boardCards=AABCCBB, handCards=AC，则输出 2。
+示例2：boardCards=AB, handCards=ABB，则输出 -1。
+
+提示：
+- 1 <= boardCards.length <= 26
+- 1 <= handCards.length <= 5
+- 一开始的卡牌中，不会有3个及3个以上相连的相同卡牌
+
+代码：
+```java
+class Solution {
+ public int findMinStep(String boardCards, String handCards) {
+  }
+}
+```
+我的代码：“import java.util.*;
+
+class Solution {
+ public int findMinStep(String boardCards, String handCards) {
+     Map<Character, Integer> hands = new HashMap<>();
+     // 预处理手牌
+     int lenh = handCards.length();
+     for (int i = 0; i < lenh; i ++) {
+         char c = handCards.charAt(i);
+         // getOrdefualt
+         hands.put(c, (hands.containsKey(c) ? hands.get(c):0) + 1 );
+     }
+
+    // 预处理 桌牌
+    int res = 0;
+    boolean flag = True;
+    int lenb = boardCards.length();
+    for (int i = 0; i < lenb; i ++) {
+         char c = boardCards.charAt(i);
+         int temp = i;
+         while( c.equals(boardCards.charAt(temp + 1)) ){
+             temp++;
+         }
+         int diff = temp - i; // i ~ temp - 1;
+         diff %= 3 // 不会出现连牌3张， 这段可有可无
+        int sum = diff + hands.get(c);
+        if (sum >= 3 ) {
+            hands.put(c, sum -3);
+            res += 3 - diff;
+        } else {
+            return -1;
+        }
+    }
+    return res;
+  }
+}

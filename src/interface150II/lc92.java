@@ -8,56 +8,55 @@ public class lc92 {
       ListNode(int val) { this.val = val; }
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
-//todo 之前的写法有错误 2025/7/21(重做
+
     public ListNode reverseBetween(ListNode head, int left, int right) {
+      // left 和 right 是索引
       if (head.next == null || left == right) return head;
-        // 需要四个节点 left_index, right_index , left前驱节点， right后置节点
-        ListNode dummy = new ListNode(-501);
-        dummy.next = head;
-        ListNode curr = dummy;
-        // left前置节点，             right后置节点     left节点           right节点
-        ListNode groupStart = null, groupEnd = null, leftIndex = null, rightIndex = null;
 
-        // 定位左区间前驱节点（groupStart）[7](@ref)
+      ListNode dummy = new ListNode(-1,head);
+        ListNode prev = dummy; // left 前一个索引位置
         for (int i = 0; i < left - 1; i++) {
-            curr = curr.next;
+            prev = prev.next;
         }
-         groupStart = curr;        // left 前驱节点
-         leftIndex = groupStart.next; // 左节点
 
-        // 定位右节点（rightIndex）[6](@ref)
-        curr = groupStart;
-        for (int i = 0; i <= right - left; i++) {
-            curr = curr.next;
+
+        ListNode leftIndex = prev.next;
+        prev.next = null; // 断开 prev 到 leftIndex
+        // 寻找 rightIndex
+        ListNode rightIndex = leftIndex.next;
+        for (int i = 0; i < (right - left) - 1; i++) {
+            rightIndex = rightIndex.next;
         }
-         rightIndex = curr;      // 右节点
-         groupEnd = rightIndex.next; // 右节点后继
 
-        // 先断开 连接
-        groupStart.next = null;
-        rightIndex.next = null;
 
-        // 反转
-        ListNode prev = null;
-        ListNode next = null;
-        curr = leftIndex;
+        ListNode next = rightIndex.next;
+        rightIndex.next = null; // 断开 rightIndex 和 next
+
+        // 翻转链表
+        reverse(leftIndex, rightIndex);
+
+        // 合并链表
+        // 两边的链表 prev , next
+        prev.next = rightIndex;
+        leftIndex.next = next;
+        return dummy.next;
+    }
+
+    private void reverse(ListNode leftIndex, ListNode rightIndex) {
+        ListNode prev = null, curr = leftIndex, next = null;
         while (curr != null) {
             next = curr.next;
             curr.next = prev;
             prev = curr;
             curr = next;
         }
-
-        // 连接节点
-        groupStart.next = prev;
-        leftIndex.next = groupEnd;
-        return dummy.next;
     }
 
     public static void main(String[] args) {
         lc92 solution = new lc92();
-        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+//        ListNode head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
 //        ListNode head = new ListNode(1);
-        System.out.println(solution.reverseBetween(head, 2, 4));
+        ListNode head = new ListNode(3, new ListNode(5));
+        System.out.println(solution.reverseBetween(head, 1, 1));
     }
 }
