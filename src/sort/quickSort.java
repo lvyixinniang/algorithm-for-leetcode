@@ -3,41 +3,38 @@ package sort;
 public class quickSort {
 // todo 快排，害得练
     public static void main(String[] args) {
-        int[] arr = new int[]{3,1,32,5,6,3,2135,34,76,8,0,43};
-        quicksort(arr,0, arr.length - 1);
+        int[] arr = new int[]{6,2,8,5,1,9,4,3,7};
+        quickSort(arr,0, arr.length - 1);
     }
 
-    private static void quicksort(int[] arr, int l, int r) {
-        if (l >= r) return;
-        int pivotIndex = sort(arr, l, r);
-        quicksort(arr, l, pivotIndex - 1);
-        quicksort(arr, pivotIndex + 1, r);
+    // 快速排序入口函数
+    public static void quickSort(int[] arr, int left, int right) {
+        if (left >= right) return;
+
+        int pivotIndex = pivot(arr, left, right);
+
+        quickSort(arr, left, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, right);
     }
 
-    private static int sort(int[] arr, int l, int r) {
-        int pivotNum = arr[l];
-        int i = l + 1;
-        int j = r;
+    public static int pivot(int[] arr, int left, int right) {
+        int pivot = arr[right];
+        int i = left - 1;
 
-        while (i <= j) {
-            while (i <= j && arr[i] <= pivotNum) {
+        for (int j = left; j < right; j++) {
+            if (arr[j] <= pivot) {
                 i ++;
-            }
-            while (i <= j && arr[j] >= pivotNum) {
-                j --;
-            }
-            if (i < j) {
                 swap(arr, i, j);
             }
         }
-        swap(arr, l, j);
-        return j;
+
+        swap(arr, i + 1, right);
+        return i + 1;
     }
 
-    private static void swap(int[] arr, int i, int j) {
+    public static void swap(int[] arr, int i, int j) {
         int temp = arr[i];
         arr[i] = arr[j];
         arr[j] = temp;
     }
-
 }
