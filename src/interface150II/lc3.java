@@ -6,24 +6,33 @@ import java.util.Map;
 public class lc3 {
 
     public int lengthOfLongestSubstring(String s) {
-        // todo 还是对华东窗口不熟 2025/7/20(重做不会
-        int len = s.length();
-        int max = len == 0 ? 0 : 1;
-        Map<Character, Integer> map = new HashMap<>();
         int left = 0;
+        int maxx = 0;
+        int len = s.length();
+        if (len == 0) return 0;
+        Map<Character, Integer> map = new HashMap<>(); //k, value索引
         for (int right = 0; right < len; right++) {
             char c = s.charAt(right);
-            if (map.containsKey(c) && map.get(c) >= left) {
-                left = Math.max(left, map.get(c) + 1); // 移动左边界
+            if (map.containsKey(c)) {
+                int c_index = map.get(c);
+                if (c_index < left) {
+                    // 不在范围内
+                    map.put(c, right);
+                } else {
+                    maxx = Math.max(maxx, right-left);
+                    left = map.get(c) + 1;
+                    map.put(c, right);
+                }
+            } else {
+                map.put(c, right);
             }
-            map.put(c, right); // 更新字符位置
-            max = Math.max(max, right - left + 1);
+            maxx = Math.max(maxx, right-left + 1);
         }
-        return max;
+        return maxx;
     }
 
     public static void main(String[] args) {
         lc3 lc3 = new lc3();
-        System.out.println(lc3.lengthOfLongestSubstring("pwwkew"));
+        System.out.println(lc3.lengthOfLongestSubstring(" "));
     }
 }

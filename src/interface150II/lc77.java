@@ -5,23 +5,23 @@ import java.util.List;
 
 public class lc77 {
 
-    // todo 有重复的情况
+    // todo 有重复的情况 12/1 重做
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<>();
-        backTrace(n, k, 1, res, new ArrayList<Integer>());
+            List<Integer> list = new ArrayList<>();
+            backTracing(res, list, 1,0 , n, k);
         return res;
     }
 
-    private void backTrace(int n, int k, int start, List<List<Integer>> res, ArrayList<Integer> list) {
-        if (list.size() == k) {
+    private void backTracing(List<List<Integer>> res, List<Integer> list, int i , int index, int n, int k) {
+        if (index == k) {
             res.add(new ArrayList<>(list));
             return;
-        } else {
-            for (int i = start; i <= n - (k - list.size()) + 1; i++) {
-                list.add(i);
-                backTrace(n, k , i + 1, res, list);
-                list.remove(list.size() - 1);
-            }
+        }
+        for (i = i; i <= n; i++) {
+            list.add(i);
+            backTracing(res, list, i + 1,index + 1, n, k);
+            list.remove(list.size()-1);
         }
     }
 }

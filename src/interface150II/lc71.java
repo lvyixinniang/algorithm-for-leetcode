@@ -3,21 +3,20 @@ package interface150II;
 import java.util.Stack;
 
 public class lc71 {
-
+    //        todo 根本题目都没看懂
     public String simplifyPath(String path) {
-//        todo 根本题目都没看懂
         String[] split = path.split("/");
         Stack<String> stack = new Stack<>();
-        for (int i = 0; i < split.length; i++) {
-            if (split[i].equals("") || split[i].equals(".")) {
-                continue;
-            } else if (split[i].equals("..")) {
+        for (String s : split) {
+            if (s.equals("") || s.equals(".")) {
+                continue; // 不处理
+            } else if (s.equals("..")) {
                 if (!stack.isEmpty()) stack.pop();
             } else {
-                stack.push(split[i]);
+                stack.push(s);
             }
         }
-        return "/" + String.join("/", stack);
+        return "/" +String.join("/",stack);
     }
 
     public static void main(String[] args) {

@@ -1,33 +1,40 @@
 package interface150II;
 
 public class lc79 {
-// todo 错误 9/18
     public boolean exist(char[][] board, String word) {
         int m = board.length, n = board[0].length;
+        if (m * n < word.length()) return false;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if (board[i][j] == word.charAt(0)) {
-                    boolean flag = backTrace(board, word, i, j, 0);
-                    if (flag) {
-                        return true;
-                    }
+                    boolean flag = backTrace(board, word, 0, i, j);
+                    if (flag) return true;
                 }
             }
         }
         return false;
     }
 
-    private boolean backTrace(char[][] board, String word, int i, int j, int index) {
-        if (i < 0 || j < 0 || i>=board.length || j>=board[0].length || index >= word.length() || board[i][j] != word.charAt(index)) {
+    private boolean backTrace(char[][] board, String word, int index, int i, int j) {
+        if (index == word.length()) {
+            return true;  // 成功匹配整个单词
+        }
+        if (i <0 || i>= board.length || j < 0 || j >= board[0].length || board[i][j] != word.charAt(index) || index == word.length()) {
             return false;
         }
-        index ++;
-
-        boolean flag = backTrace(board, word, i + 1, j, index)
-                || backTrace(board, word, i - 1, j, index)
-                || backTrace(board, word, i, j + 1, index)
-                || backTrace(board, word, i, j - 1, index);
-        index --;
+        char temp = board[i][j];
+        board[i][j] = '2';
+        boolean flag = backTrace(board, word, index + 1, i+1, j) ||
+        backTrace(board, word, index + 1, i - 1, j) ||
+        backTrace(board, word, index + 1, i , j + 1) ||
+        backTrace(board, word, index + 1, i, j - 1);
+        board[i][j] = temp;
         return flag;
+    }
+
+    public static void main(String[] args) {
+        char[][] board = new char[][]{{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
+        lc79 lc79 = new lc79();
+        lc79.exist(board, "ABCCED");
     }
 }
