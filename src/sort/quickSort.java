@@ -1,28 +1,32 @@
 package sort;
 
+import java.util.Random;
+
 public class quickSort {
 // todo 快排，害得练
     public static void main(String[] args) {
-        int[] arr = new int[]{6,2,8,5,1,9,4,3,7};
-        quickSort(arr,0, arr.length - 1);
+        int[] arr = {5, 4, 3, 2, 1};
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println(arr);
     }
 
-    // 快速排序入口函数
     public static void quickSort(int[] arr, int left, int right) {
-        if (left >= right) return;
-
-        int pivotIndex = pivot(arr, left, right);
-
-        quickSort(arr, left, pivotIndex - 1);
-        quickSort(arr, pivotIndex + 1, right);
+        if (left < right) {
+            int pivot = partition(arr, left , right);
+            quickSort(arr, left, pivot - 1);
+            quickSort(arr, pivot + 1, right);
+        }
     }
 
-    public static int pivot(int[] arr, int left, int right) {
+    public static int partition(int[] arr, int left, int right) {
+        Random random = new Random();
+        int pivotIndex = random.nextInt(right - left + 1) + left;
+        swap(arr, pivotIndex, right);
         int pivot = arr[right];
-        int i = left - 1;
 
+        int i = left - 1;
         for (int j = left; j < right; j++) {
-            if (arr[j] <= pivot) {
+            if (arr[j] < pivot) {
                 i ++;
                 swap(arr, i, j);
             }
@@ -37,4 +41,5 @@ public class quickSort {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+
 }

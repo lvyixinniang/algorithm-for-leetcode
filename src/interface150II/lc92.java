@@ -10,47 +10,52 @@ public class lc92 {
   }
 
     public ListNode reverseBetween(ListNode head, int left, int right) {
-      // left 和 right 是索引
-      if (head.next == null || left == right) return head;
+        if (head == null || left == right || head.next == null) return head;
+        ListNode dummy = new ListNode(-1, head);
+        ListNode cur = dummy;
 
-      ListNode dummy = new ListNode(-1,head);
-        ListNode prev = dummy; // left 前一个索引位置
-        for (int i = 0; i < left - 1; i++) {
-            prev = prev.next;
+        ListNode oldhead = null, newtail = null;
+        int count = 0;
+        while (cur != null) {
+
+            if (count == left - 1) {
+                oldhead = cur;
+            }
+            if (count == right) {
+                newtail = cur;
+                break;
+            }
+            cur = cur.next;
+            count ++;
         }
-
-
-        ListNode leftIndex = prev.next;
-        prev.next = null; // 断开 prev 到 leftIndex
-        // 寻找 rightIndex
-        ListNode rightIndex = leftIndex.next;
-        for (int i = 0; i < (right - left) - 1; i++) {
-            rightIndex = rightIndex.next;
-        }
-
-
-        ListNode next = rightIndex.next;
-        rightIndex.next = null; // 断开 rightIndex 和 next
+        // 设置 前置条件
+        ListNode newhead = oldhead.next;
+        oldhead.next = null;
+        ListNode oldtail = newtail.next;
+        newtail.next = null;
 
         // 翻转链表
-        reverse(leftIndex, rightIndex);
+        reverse(newhead);
 
-        // 合并链表
-        // 两边的链表 prev , next
-        prev.next = rightIndex;
-        leftIndex.next = next;
+        // 重新合成链表
+        oldhead.next = newtail;
+        newhead.next = oldtail;
+
         return dummy.next;
     }
 
-    private void reverse(ListNode leftIndex, ListNode rightIndex) {
-        ListNode prev = null, curr = leftIndex, next = null;
-        while (curr != null) {
-            next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
-        }
+    private void reverse(ListNode head) {
+      if (head == null || head.next == null) return;
+
+      ListNode pre = null, cur = head;
+      while (cur != null) {
+          ListNode next = cur.next;
+          cur.next = pre;
+          pre = cur;
+          cur = next;
+      }
     }
+
 
     public static void main(String[] args) {
         lc92 solution = new lc92();

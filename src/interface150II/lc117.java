@@ -28,22 +28,29 @@ public class lc117 {
 
     public Node connect(Node root) {
         if (root == null) return null;
+
         Queue<Node> q = new LinkedList<>();
         q.add(root);
+        root.next = null;
         while (!q.isEmpty()) {
+            List<Node> list = new ArrayList<>();
             int size = q.size();
-            List<Node> nodes = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 Node node = q.poll();
-                nodes.add(node);
-                if (node.left != null) q.add(node.left);
-                if (node.right != null) q.add(node.right);
-            }
-            if (nodes.size() > 1) {
-                for (int i = 0; i < nodes.size() - 1; i++) {
-                    nodes.get(i).next = nodes.get(i + 1);
+                if (node.left != null) {
+                    q.add(node.left);
+                    list.add(node.left);
+                }
+                if (node.right != null) {
+                    q.add(node.right);
+                    list.add(node.right);
                 }
             }
+
+            for (int i = 0; i < list.size() - 1; i++) {
+                list.get(i).next = list.get(i + 1);
+            }
+            if (list.size() > 0) list.get(list.size() - 1).next = null;
         }
         return root;
     }

@@ -21,13 +21,12 @@ public class lc226 {
     }
 
     private void reverse(TreeNode root) {
-        if (root == null) return;
-
+          if (root == null) return;
           TreeNode temp = root.left;
-        root.left = root.right;
-        root.right = temp;
+          root.left = root.right;
+          root.right = temp;
 
-        reverse(root.left);
-        reverse(root.right);
+          reverse(root.left);
+          reverse(root.right);
     }
 }

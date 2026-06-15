@@ -9,28 +9,25 @@ public class lc21 {
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
     public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode re = new ListNode(0);
-        ListNode ans = new ListNode(-1,re);
-        while (list1 != null || list2 != null) {
-            int x1 = list1 == null ? 101 : list1.val;
-            int x2 = list2 == null ? 101 : list2.val;
-            if (list1 !=null && list2 != null) {
-                if (x1 < x2) {
-                    re.next = new ListNode(list1.val);
-                    list1 = list1.next;
-                } else {
-                    re.next = new ListNode(list2.val);
-                    list2 = list2.next;
-                }
-                re = re.next;
+        ListNode head = new ListNode(0);
+        ListNode cur = head;
+        while (list1 != null && list2 != null) {
+            if (list1.val < list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
             } else {
-                re.next = new ListNode(list1 == null ? list2.val : list1.val);
-                re = re.next;
-                if (list1 != null) list1 = list1.next;
-                if (list2 != null) list2 = list2.next;
+                cur.next = list2;
+                list2 = list2.next;
             }
+            cur = cur.next;
         }
-        return ans.next.next;
+        if (list1 != null) {
+            cur.next = list1;
+        }
+        if (list2 != null) {
+            cur.next = list2;
+        }
+        return head.next;
     }
 
     public static void main(String[] args) {

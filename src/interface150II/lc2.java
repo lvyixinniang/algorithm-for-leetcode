@@ -10,21 +10,28 @@ public class lc2 {
       }
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int jinwei = 0;
-        ListNode ans = new ListNode(-1);
-        ListNode head = new ListNode(0, ans);
+        ListNode new_head = new ListNode(0);
+        ListNode cur = new_head;
         while (l1 != null || l2 != null) {
-            int x1 = l1 == null ? 0 : l1.val;
-            int x2 = l2 == null ? 0 : l2.val;
-            int sum = x1 + x2 + jinwei;
-            jinwei = sum / 10;
-            ans.next = new ListNode(sum % 10);
-            ans = ans.next;
-            if (l1 != null) l1 = l1.next;
-            if (l2 != null) l2 = l2.next;
+            int x = 0, y = 0;
+            if (l1 != null) {
+                x = l1.val;
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                y = l2.val;
+                l2 = l2.next;
+            }
+            int sum = (x + y + jinwei) % 10;
+            jinwei = (x + y + jinwei) / 10;
+            cur.next = new ListNode(sum);
+            cur = cur.next;
         }
-        if (jinwei == 1) {
-            ans.next = new ListNode(1);
+
+        if (jinwei != 0) {
+            cur.next = new ListNode(jinwei);
         }
-        return head.next.next;
+
+        return new_head.next;
     }
 }

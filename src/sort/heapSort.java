@@ -3,51 +3,46 @@ package sort;
 public class heapSort {
 
     public static void main(String[] args) {
-        int[] arr = new int[]{5, 24, 31, 25, 11};
-        headpSort(arr);
-
+        int[] arr = { 5, 4, 3, 2, 1 };
+        heapSort(arr);
+        System.out.println( arr);
     }
 
-    public static void headpSort(int[] nums) {
-        int n = nums.length;
-
-        // 从最后一个非叶子结点
-        for (int i = n / 2 - 1; i >= 0; i --) {
-            heapify(nums, n, i);
+    public static void heapSort(int[] arr) {
+        int n = arr.length;
+//        2*n +2
+        for (int i = n/2 - 1; i >= 0; i--) {
+            heapify(arr, i, n);
         }
 
-        // 2. 逐个从堆顶取出最大元素， 放到数组末尾
-        for (int i = n - 1; i > 0; i--) {
-            swap(nums, 0, i);
-
-            heapify(nums, i, 0);
+        for (int i = n - 1; i >= 0; i--) {
+            swap(arr, 0, i);//将当前最大的交换到队列末尾
+            heapify(arr, 0, i);
         }
     }
 
-    private static void heapify(int[] nums, int n, int i) {
+    public static void heapify(int[] arr, int i, int n) {
         int largest = i;
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
+        int left = 2*i + 1;
+        int right = 2*i + 2;
 
-        if (left < n && nums[left] > nums[largest]) {
+        if (left < n && arr[left] > arr[largest]) {
             largest = left;
         }
-
-        if (right < n && nums[right] > nums[largest]) {
+        if (right < n && arr[right] > arr[largest]) {
             largest = right;
         }
 
         if (largest != i) {
-            swap (nums, largest, i);
-
-            heapify(nums, n, largest);
+            swap(arr, i, largest);
+            // 调节子树的
+            heapify(arr, largest, n);
         }
     }
 
-    private static void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
+    public static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
     }
-
 }

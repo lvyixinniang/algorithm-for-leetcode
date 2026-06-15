@@ -1,7 +1,7 @@
 package interface150II;
 
 public class lc69 {
-//    todo 其实没什么思路
+//    todo 4/21 存在不知道高效算法的问题
     public int mySqrt(int x) {
 //        二分
         int l = 0, r = x;
