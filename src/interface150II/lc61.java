@@ -10,8 +10,8 @@ public class lc61 {
   }
 //  todo 边界值处理不当
     public ListNode rotateRight(ListNode head, int k) {
-      if (head == null || head.next == null) return head;
-        //1. 计算链表长度并找到为节点
+        if (head == null || head.next == null) return head;
+        // 1. 计算链表长度并找到节点
         ListNode tail = null;
         ListNode cur = head;
         int size = 1;
@@ -19,26 +19,23 @@ public class lc61 {
             size++;
             cur = cur.next;
         }
-        tail = cur; // 此时是尾节点
+        tail = cur; // 为节点
 
         // 形成循环链表
         tail.next = head;
 
-        // 3.计算有旋转步数 （k 可能大于 size）
         k = k % size;
         if (k == 0) {
             tail.next = null;
             return head;
         }
 
-        // 4. 找到新尾节点 （索引 size - k - 1) 和新头结点
         ListNode new_tail = head;
         for (int i = 0; i < size - k - 1; i++) {
             new_tail = new_tail.next;
         }
         ListNode new_head = new_tail.next;
 
-        // 5.断开连接： 新尾节点。next 置null
         new_tail.next = null;
 
         return new_head;

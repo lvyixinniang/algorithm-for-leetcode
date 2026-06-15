@@ -7,22 +7,19 @@ import java.util.Set;
 
 public class lc139 {
     public boolean wordBreak(String s, List<String> wordDict) {
-        int slen = s.length();
-        int wlen = wordDict.size();
-        boolean[] dp = new boolean[slen];
+        int len = s.length();
+        boolean[] dp = new boolean[len + 1];
         Arrays.fill(dp, false);
-        for (int i = 0; i < slen; i++) {
-            for (int j = 0; j < wlen; j++) {
-                int currlen = wordDict.get(j).length();
-                if (i + 1>= currlen) {
-                    if (wordDict.get(j).equals(s.substring(i - currlen + 1, i + 1))) { // [l,r)
-                        boolean temp = i - currlen >= 0 ? dp[i - currlen] : true;
-                        dp[i] = dp[i] || temp;
-                    }
+        dp[0] = true;
+        for (int i = 1; i <= len; i++) {
+            for (int j = 0; j < wordDict.size(); j++) {
+                int lenj = wordDict.get(j).length();
+                if (i >= lenj && dp[i - lenj] && wordDict.get(j).equals(s.substring(i - lenj, i))) {
+                    dp[i] = true;
                 }
             }
         }
-        return dp[slen - 1];
+        return dp[len];
     }
 
     public static void main(String[] args) {

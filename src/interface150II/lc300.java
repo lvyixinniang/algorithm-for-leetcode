@@ -6,17 +6,17 @@ public class lc300 {
 
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
-        int max = 1;
-        Arrays.fill(dp, 1); //dp[0]=1 记录当前索引的 最长的子序列
+        Arrays.fill(dp, 1);
+        int maxx = 1;
         for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
-            max = Math.max(max, dp[i]);
+            maxx = Math.max(maxx, dp[i]);
         }
-        return max;
+        return maxx;
     }
 
     public static void main(String[] args) {

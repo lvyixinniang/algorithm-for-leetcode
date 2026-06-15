@@ -6,19 +6,21 @@ import java.util.Map;
 public class lc167 {
 
     public int[] twoSum(int[] numbers, int target) {
-        int low = 0, high = numbers.length - 1;
-        while (low < high) {
-            int sum = numbers[low] + numbers[high];
-            if (sum == target) {
-                return new int[]{low + 1, high + 1};
-            }else if (sum < target) {
-                low++;
-            }else if (sum > target) {
-                high--;
+        int left = 0, right = numbers.length - 1;
+        int len = numbers.length;
+
+        while (left < right) {
+            if (target == numbers[left] + numbers[right]) {
+                return new int[]{left + 1, right + 1};
+            } else if (target > numbers[left] + numbers[right]) {
+                left++;
+            } else {
+                right--;
             }
         }
-        return new int[]{low + 1, high + 1};
+        return new int[]{-1, -1};
     }
+
     public static void main(String[] args) {
         lc167 lc167 = new lc167();
         System.out.println(lc167.twoSum(new int[]{2,7,11,15}, 9));

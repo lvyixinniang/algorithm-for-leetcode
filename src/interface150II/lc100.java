@@ -15,17 +15,12 @@ public class lc100 {
       }
   }
     public boolean isSameTree(TreeNode p, TreeNode q) {
-        return searchEquals(p, q);
+          if (p == null && q == null) return true;
+          if (p == null || q == null) return false;
+          if (p.val != q.val) return false;
+
+          return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
-
-    private boolean searchEquals(TreeNode p, TreeNode q) {
-          // 先是终止条件
-        if (p == null && q == null) return true;
-        else if (p == null || q == null) return false;
-        if (p.val != q.val) return false;
-
-        return searchEquals(p.left, q.left) && searchEquals(p.right, q.right);
-   }
 
 
 }

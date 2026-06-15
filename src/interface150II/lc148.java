@@ -1,5 +1,9 @@
 package interface150II;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class lc148 {
     public class ListNode {
       int val;
@@ -8,42 +12,42 @@ public class lc148 {
       ListNode(int val) { this.val = val; }
       ListNode(int val, ListNode next) { this.val = val; this.next = next; }
   }
-// todo 不会归并排序 8/28日重做 (不会）
+// todo 不会归并排序 8/28日重做 (不会）2026/4/10 不会进阶
     public ListNode sortList(ListNode head) {
-        if (head == null || head.next == null) return head;
+        if (head == null || head.next == null) {
+            return head;
+        }
 
-//        先从中间分开
-        ListNode slow = head, fast = head.next;
-        while (fast != null && fast.next != null) {
+        ListNode slow = head, fast = head;
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        ListNode temp = slow.next;
+        ListNode tmp = slow.next;
         slow.next = null;
-        
-        // 递归调用该方法
+
         ListNode left = sortList(head);
-        ListNode right = sortList(temp);
-        
-        // 在合并
-        return mergeList(left, right); // 我感觉我额度返回值是错误的
+        ListNode right = sortList(tmp);
+
+        // 合并
+        return mergeList(left, right);
     }
 
-    private ListNode mergeList(ListNode head, ListNode temp) {
-        ListNode dummy = new ListNode(-1);
-        ListNode cur = dummy;
-        while (head != null && temp != null) {
-            if (head.val >= temp.val) {
-                cur.next = temp;
-                temp = temp.next;
+    public ListNode mergeList(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val > l2.val) {
+                cur.next = l2;
+                l2 = l2.next;
             } else {
-                cur.next = head;
-                head = head.next;
+                cur.next = l1;
+                l1 = l1.next;
             }
             cur = cur.next;
         }
-        cur.next = head == null ? temp : head;
-        return dummy.next;
+        cur.next = l1 == null ? l2 : l1;
+        return head.next;
     }
 
 

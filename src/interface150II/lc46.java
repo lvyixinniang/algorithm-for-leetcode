@@ -8,32 +8,32 @@ public class lc46 {
 
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        if (nums == null || nums.length == 0) return res;
-        List<Integer> list = new ArrayList<>();
-        for (int num : nums) {
-            list.add(num);
-        }
-        backTrace(res, 0, list);
+        backTracing(res, nums, 0);
         return res;
     }
 
-    private void backTrace( List<List<Integer>> res, int index, List<Integer> list ) {
-        if (index == list.size()) {
-            res.add(new ArrayList<>(list));
+    private void backTracing(List<List<Integer>> res, int[] nums, int index) {
+        if (index == nums.length) {
+            // 将当前数组转换为列表
+            List<Integer> list = new ArrayList<>();
+            for (int num : nums) {
+                list.add(num);
+            }
+            res.add(list);
+            return;
         }
 
-        for (int i = index; i < list.size(); i++) {
-            swap(list, index, i);
-            backTrace(res, index + 1, list);
-            swap(list, index , i);
+        for (int i = index; i < nums.length; i++) {
+            swap(nums, index, i);
+            backTracing(res, nums, index + 1);
+            swap(nums, index, i);
         }
-
     }
 
-    private void swap(List<Integer> list, int index, int i) {
-        int temp = list.get(index);
-        list.set(index, list.get(i));
-        list.set(i, temp);
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 
 

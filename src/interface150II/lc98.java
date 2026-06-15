@@ -16,22 +16,21 @@ public class lc98 {
           this.right = right;
       }
   }
+
+  private long preVal = Long.MIN_VALUE;
+
     public boolean isValidBST(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        //前序遍历，判断是否有顺序不对
-        return dfsPre(root,list);
+        return midSearch(root);
     }
 
-    private boolean dfsPre(TreeNode root, List<Integer> list) {
+    private boolean midSearch(TreeNode root) {
         if (root == null) return true;
-        boolean flagleft = dfsPre(root.left,list);
+        boolean left = midSearch(root.left);
+        if (!left) return false;
+        if (root.val <= preVal) return false;
+        preVal = root.val;
 
-        boolean flag = false;
-        if (list.size() == 0) flag = true;
-        else flag = root.val > list.get(list.size()-1);
-        list.add(root.val);
-        boolean flagright = dfsPre(root.right,list);
-        // 没有继承我的一致性
-        return flag && flagleft && flagright;
+        boolean right = midSearch(root.right);
+        return right;
     }
 }

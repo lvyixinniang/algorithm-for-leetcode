@@ -13,27 +13,35 @@ public class lc105 {
           this.right = right;
       }
   }
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return Builder(preorder, inorder, 0, preorder.length - 1, 0, inorder.length - 1);
+        int len = preorder.length;
+        return build(preorder, inorder, 0, len - 1, 0, len - 1);
     }
 
-    private TreeNode Builder(int[] preorder, int[] inorder, int pre_left, int pre_right, int in_left, int in_right) {
+    private TreeNode build(int[] preorder, int[] inorder, int pre_left, int pre_right, int in_left, int in_right) {
       if (pre_left > pre_right || in_left > in_right) return null;
 
-      TreeNode root =  new TreeNode(preorder[pre_left]);
-        int root_val = preorder[pre_left];
-//        查询，root——val在中序的位置
-        int root_index = in_left;
+      TreeNode root = new TreeNode(preorder[pre_left]);
+
+      int root_val = preorder[pre_left];
+      int in_index = -1;
         for (int i = in_left; i <= in_right; i++) {
             if (inorder[i] == root_val) {
-                root_index = i;
+                in_index = i;
                 break;
             }
         }
 
-        int len = root_index - in_left; // 左树长度
-        root.left = Builder(preorder, inorder, pre_left + 1, pre_left+len, in_left, root_index -1);
-        root.right = Builder(preorder, inorder, pre_left+ len + 1, pre_right, root_index+1, in_right);
+        int leftTreeSize = in_index - in_left;
+
+        root.left = build(preorder, inorder
+                , pre_left + 1, pre_left + leftTreeSize
+                , in_left, in_index - 1);
+        root.right = build(preorder, inorder,
+                pre_left+ leftTreeSize + 1, pre_right,
+                in_index + 1, in_right);
+
         return root;
     }
 }

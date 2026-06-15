@@ -3,20 +3,22 @@ package interface150II;
 import java.util.Stack;
 
 public class lc71 {
-    //        todo 根本题目都没看懂
+    //        todo 根本题目都没看懂 2026/4/11 没想到怎么做栈
     public String simplifyPath(String path) {
         String[] split = path.split("/");
         Stack<String> stack = new Stack<>();
         for (String s : split) {
             if (s.equals("") || s.equals(".")) {
-                continue; // 不处理
+                continue;
             } else if (s.equals("..")) {
-                if (!stack.isEmpty()) stack.pop();
+                if (!stack.isEmpty()) {
+                    stack.pop();
+                }
             } else {
                 stack.push(s);
             }
         }
-        return "/" +String.join("/",stack);
+        return "/" + String.join("/", stack);
     }
 
     public static void main(String[] args) {

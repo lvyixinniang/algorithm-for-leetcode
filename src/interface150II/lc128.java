@@ -12,17 +12,15 @@ public class lc128 {
             set.add(num);
         }
         int max = 0;
-        for (Integer s : set) {
-            if (set.contains(s - 1)) {
-                continue;
+        for (int num : set) {
+            if (!set.contains(num - 1)) {
+                int curmax = 1;
+                while (set.contains(num + 1)) {
+                    curmax++;
+                    num++;
+                }
+                max = Math.max(max, curmax);
             }
-            int sum = 1;
-            int temp = s;
-            while (set.contains(temp + 1)) {
-                sum ++;
-                temp ++;
-            }
-            max = Math.max(max, sum);
         }
         return max;
     }

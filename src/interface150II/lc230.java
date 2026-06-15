@@ -5,7 +5,7 @@ import java.util.List;
 
 public class lc230 {
     
-    public class TreeNode {
+    public static  class TreeNode {
       int val;
       TreeNode left;
       TreeNode right;
@@ -18,16 +18,32 @@ public class lc230 {
       }
   }
 
-  List<Integer> list = new ArrayList<>();
-    public int kthSmallest(TreeNode root, int k) {
-        minDfs(root);
-        return list.get(k - 1);
+    private static int count = 0;
+
+    public static  int kthSmallest(TreeNode root, int k) {
+        return dfs(root, k);
     }
 
-    private void minDfs(TreeNode root) {
-        if (root == null) return;
-        minDfs(root.left);
-        list.add(root.val);
-        minDfs(root.right);
+    private static int dfs(TreeNode root, int k) {
+        if (root == null) return -1;
+
+        int leftRes = dfs(root.left, k);
+        if (leftRes != -1) {
+            return leftRes;
+        }
+
+        count++;
+        if (count == k) {
+            return root.val;
+        }
+
+        int rightRes = dfs(root.right, k);
+        return rightRes;
+    }
+
+    public static void main(String[] args) {
+        lc230 solution = new lc230();
+        TreeNode root = new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4));
+        System.out.println(kthSmallest(root, 2));
     }
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 public class lc17 {
     private Map<Character, String> map = new HashMap<>();
     public List<String> letterCombinations(String digits) {
+        List<String> res = new ArrayList<>();
         map.put('2', "abc");
         map.put('3', "def");
         map.put('4', "ghi");
@@ -16,22 +17,20 @@ public class lc17 {
         map.put('7', "pqrs");
         map.put('8', "tuv");
         map.put('9', "wxyz");
-        List<String> res = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
-        if (digits.length() == 0) {return res;}
-        backTrace(map, digits, res, 0, sb);
+        backTracing(res, digits, 0, sb);
         return res;
     }
 
-    private void backTrace(Map<Character, String> map, String digits, List<String> res, int index, StringBuilder sb) {
-        if (sb.length() == digits.length()) {
+    private void backTracing(List<String> res, String digits, int start, StringBuilder sb) {
+        if (start == digits.length()) {
             res.add(sb.toString());
-            return;
         }
-        String str = map.get(digits.charAt(index));
-        for (int i = 0; i < str.length(); i++) {
-            sb.append(str.charAt(i));
-            backTrace(map, digits, res, index + 1, sb);
+        char c = digits.charAt(start);
+        String letter = map.get(c);
+        for (int i = 0; i < letter.length(); i++) {
+            sb.append(c);
+            backTracing(res, digits, start + 1, sb);
             sb.deleteCharAt(sb.length() - 1);
         }
     }

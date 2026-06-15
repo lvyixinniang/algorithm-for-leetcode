@@ -14,13 +14,12 @@ public class lc104 {
           this.right = right;
       }
   }
-
+// todo 可以时常来看看
     public int maxDepth(TreeNode root) {
-        return search(root);
+        return dfs(root);
     }
-
-    private int search(TreeNode root) {
-      if (root == null) return 0;
-      return Math.max(search(root.left), search(root.right)) + 1;
+    public int dfs(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(dfs(root.left), dfs(root.right)) + 1;
     }
 }
