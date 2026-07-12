@@ -30,7 +30,6 @@ public class lc399 {
                 ans[i] = dfs(graph, c, d, new HashSet<>(), 1.0);
             }
         }
-
         return ans;
     }
 
@@ -43,7 +42,7 @@ public class lc399 {
             for (Map.Entry<String, Double> entry : neighbors.entrySet()) {
                    String next = entry.getKey();
                    if (!visited.contains(next)) {
-                       double result = dfs(graph, next, target, visited, product);
+                       double result = dfs(graph, next, target, visited, product * entry.getValue());
                        if (result != -1.0) return result;
                    }
             }
